@@ -1,11 +1,7 @@
 import Head from 'next/head'
-import { Button, Typography } from 'antd'
-import { useAppStore } from '@/lib/store/store'
 import { HomeView } from '@/components/organisms/home/HomeView'
 
 export default function Home() {
-  const { user } = useAppStore()
-
   return (
     <>
       <Head>
@@ -16,8 +12,6 @@ export default function Home() {
       </Head>
       <main>
         <HomeView />
-        <Button>Profitline</Button>
-        <Typography color="primary">{user.name}</Typography>
       </main>
     </>
   )
