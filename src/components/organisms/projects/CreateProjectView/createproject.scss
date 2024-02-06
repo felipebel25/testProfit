@@ -1,0 +1,63 @@
+@import "../../../../styles/variables.scss";
+
+.mainCreateProject {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+
+    .buttonGoBack {
+        display: flex;
+        align-items: center;
+        color: $secondary-gray;
+    }
+
+    .divider {
+        color: $secondary-gray;
+        font-size: 1.8rem;
+        margin: 0 0.5rem;
+    }
+
+    .icon {
+        color: $secondary-gray;
+    }
+
+    .rutesText {
+        color: $secondary-gray;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .containerCreateProject {
+        width: 100%;
+        padding: 3rem;
+
+        .titleName {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .subtitleNit {
+            font-weight: 600;
+            margin: 1rem 0;
+        }
+
+        .imageProject {
+            margin: rem 0;
+        }
+    }
+
+
+    .infoHeaderProject {
+        margin: 1rem 0;
+        gap: 2rem;
+        padding-left: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .tabsContainer {
+        width: 100%;
+        padding-left: 1.5rem;
+
+    }
+}
