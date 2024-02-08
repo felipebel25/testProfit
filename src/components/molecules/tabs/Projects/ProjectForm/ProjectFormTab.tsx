@@ -6,7 +6,11 @@ import "./projectformtab.scss";
 const { Title, Text } = Typography;
 const { TextArea } = Input;
 
-export const ProjectFormTab = () => {
+interface Props {
+  onIsEditProject: () => void;
+}
+
+export const ProjectFormTab = ({ onIsEditProject }: Props) => {
   return (
     <main className="mainProyectsForm">
       <Flex vertical component={"section"}>
@@ -17,7 +21,14 @@ export const ProjectFormTab = () => {
               Información del proyecto
             </Title>
           </Flex>
-          <Button icon={<Pencil size="1.45rem" />} size="large" />
+          <Flex gap={"1rem"}>
+            <Button className="buttonAction" icon={<Pencil size="1.45rem" />} size="large">
+              Guardar
+            </Button>
+            <Button size="large" className="buttonAction" onClick={onIsEditProject}>
+              Descartar
+            </Button>
+          </Flex>
         </Flex>
         <Flex gap={"4rem"} component={"main"}>
           {/* -----------------------------------General--------------------------------------- */}

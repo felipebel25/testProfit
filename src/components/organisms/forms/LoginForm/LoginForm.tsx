@@ -49,7 +49,7 @@ export const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmitHandler = async ({ email, password }: IAuthLogin) => {
-    getAuth(email.trim(), password, router, false, openNotification);
+    getAuth(email.trim(), password, router, false, () => openNotification("topRight"));
     reset();
   };
 

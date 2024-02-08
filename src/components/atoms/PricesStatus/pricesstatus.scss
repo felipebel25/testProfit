@@ -1,0 +1,30 @@
+@import '../../../styles/variables';
+.mainPricesStatus{
+    text-align: right;
+    position: absolute;
+    top: 50px;
+    right: 130px;
+    .totalPricesStatus {
+        font-weight: 900;
+    }
+    .priceExpired{
+        font-weight: 900;
+        color: $secondary;
+        font-size: 1rem;
+
+    }
+    .priceNotExpired{
+        font-weight: 900;
+        font-size: 1rem;
+        color: $tertiary;
+
+    }
+    .textPrice{
+        font-size: 1rem;
+    }
+    .sectionPrice{
+        display: flex;
+        justify-content: space-between;
+        width: 20rem;
+    }
+}

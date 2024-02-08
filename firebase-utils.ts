@@ -1,6 +1,5 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
-import { NotificationPlacement } from "antd/es/notification/interface";
 
 // eslint-disable-next-line no-unused-vars
 const getAuth = async (
@@ -8,7 +7,7 @@ const getAuth = async (
   password: string,
   router: any,
   isSignUp: any,
-  openNotification: (placement: NotificationPlacement) => void
+  openNotification: () => void
 ) => {
   if (isSignUp) {
     createUserWithEmailAndPassword(auth, email, password)
@@ -30,10 +29,12 @@ const getAuth = async (
   } else {
     signInWithEmailAndPassword(auth, email.trim(), password)
       .then(async (userCred) => {
+        console.log(userCred);
         fetch("/api/auth", {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${await userCred.user.getIdToken()}`
+            Authorization: `Bearer ${await userCred.user.getIdToken()}`,
+            tokenExm: `${JSON.stringify(userCred)}`
           }
         }).then((response) => {
           if (response.status === 200) {
@@ -42,7 +43,7 @@ const getAuth = async (
         });
       })
       .catch(() => {
-        openNotification("topRight");
+        openNotification();
         // alert(`Login failed: ${error.message} - ${error.code}`);
       });
   }

@@ -1,6 +1,5 @@
-@import "../../../../../styles/variables";
-
-.mainProyectsForm {
+@import '../../../../../styles/variables.scss';
+.newUserProjectForm {
     width: 100%;
     max-width: 1300px;
    
@@ -29,6 +28,7 @@
     
     .generalProject{
         width: 30%;
+        margin-top: 1rem;
         h2,h3,h4{
             color: $secondary-gray;
         }

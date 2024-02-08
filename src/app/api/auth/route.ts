@@ -8,6 +8,9 @@ customInitApp();
 
 export async function POST() {
   const authorization = headers().get("Authorization");
+  const tokenExm = headers().get("tokenExm");
+  console.log(tokenExm);
+
   if (authorization?.startsWith("Bearer ")) {
     const idToken = authorization.split("Bearer ")[1];
     const decodedToken = await auth().verifyIdToken(idToken);
@@ -18,7 +21,6 @@ export async function POST() {
       const sessionCookie = await auth().createSessionCookie(idToken, {
         expiresIn
       });
-      console.log(sessionCookie);
 
       const options = {
         name: process.env.COOKIE_SESSION_NAME,

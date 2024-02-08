@@ -5,9 +5,13 @@ import "./projectinfotab.scss";
 
 const { Title, Text } = Typography;
 
-export const ProjectInfoTab = () => {
+interface Props {
+  onIsEditProject: () => void;
+}
+
+export const ProjectInfoTab = ({ onIsEditProject }: Props) => {
   return (
-    <main className="mainProyectsForm">
+    <main className="mainProyectsDetails">
       <Flex vertical component={"section"}>
         <Flex component={"header"} className="headerProyectsForm" justify="space-between">
           <Flex align="center">
@@ -16,7 +20,7 @@ export const ProjectInfoTab = () => {
               Información del proyecto
             </Title>
           </Flex>
-          <Button icon={<Pencil size="1.45rem" />} size="large" />
+          <Button icon={<Pencil size="1.45rem" />} size="large" onClick={onIsEditProject} />
         </Flex>
         <Flex gap={"4rem"} component={"main"}>
           {/* -----------------------------------General--------------------------------------- */}
