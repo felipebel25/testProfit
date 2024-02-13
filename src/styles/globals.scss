@@ -10,6 +10,7 @@ body {
   max-width: 100vw;
   margin: 0;
   overflow-x: hidden;
+  height: 100vh;
 }
 
 body {
@@ -27,9 +28,16 @@ a {
   color: inherit;
   text-decoration: none;
 }
+.ant-popover-inner{
+  background-color: white !important;
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
 }
+.ant-cascader-menus{
+  background-color: white !important;
+
+}
+ .ant-cascader-menu-item-expand{
+  background-color: #DDDDDD !important;
+  margin: .5rem;
+
+ }

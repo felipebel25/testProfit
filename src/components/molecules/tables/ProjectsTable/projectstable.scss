@@ -1,0 +1,28 @@
+@import '../../../../styles/variables.scss';
+
+.mainProjectsTable {
+    box-shadow: -6px 6px 32px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-top: 2rem;
+    .mainProjectsTable_header {
+        margin: 2rem 0;
+    }
+    .inputSearch{
+         &::placeholder{
+            color: black !important;
+         }
+         
+    }
+    .buttonNewProject {
+        background-color: $secondary;
+        color: black;
+        font-weight: 600;
+
+        &:hover {
+            background-color: $secondary !important;
+            opacity: 0.8;
+            color: black;
+        }
+    }
+}

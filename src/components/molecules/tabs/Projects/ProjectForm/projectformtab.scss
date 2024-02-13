@@ -1,0 +1,106 @@
+@import "../../../../../styles/variables";
+
+.mainProyectsForm {
+    width: 100%;
+    overflow-y: scroll;
+    height: 100%;
+
+    .headerProyectsForm {
+        padding: .5rem 0;
+        padding-right: .5rem;
+        justify-content: space-between;
+
+        h2,
+        h3,
+        h4 {
+            color: $secondary-gray;
+        }
+
+    }
+
+    .ant-upload-select {
+        width: 150px !important;
+        height: 150px !important;
+        margin-top: .75rem !important;
+    }
+
+    .imageSection {
+        margin-bottom: 1rem;
+    }
+
+    .ant-upload-wrapper {
+        width: 50% !important;
+    }
+
+    .buttonAction {
+        color: black;
+        display: flex;
+
+        &:hover {
+            opacity: 0.8;
+            color: black;
+        }
+    }
+
+    .generalProject {
+        width: 100%;
+        flex-wrap: wrap;
+
+        h2,
+        h3,
+        h4 {
+            color: $gray;
+        }
+
+        h5 {
+            color: $gray;
+        }
+
+        .containerInput {
+            width: 23%;
+            margin: 0.25rem 0.5rem;
+
+            .ant-color-picker-trigger {
+                background-color: $background;
+                justify-content: flex-start;
+                padding: 1.5rem;
+                border: none;
+            }
+
+            .ant-popover-inner {
+                background-color: $background;
+
+            }
+
+            .ant-select-selection-item-content {
+                color: black;
+
+            }
+
+            .ant-input-disabled {
+                color: black;
+            }
+        }
+
+        .input {
+            background-color: $background;
+            margin-bottom: 1rem;
+            border-radius: 0;
+            padding: 0.7rem;
+            border-radius: 0.25rem;
+
+            &::placeholder {
+                color: $secondary-gray;
+            }
+        }
+    }
+
+    .selectInput {
+        width: 100%;
+        margin-bottom: 1rem;
+        background-color: $background;
+        padding: 0.45rem;
+        border-radius: 0.25rem;
+        border-bottom: none;
+    }
+}
