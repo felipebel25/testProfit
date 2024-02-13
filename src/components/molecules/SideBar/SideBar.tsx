@@ -1,7 +1,9 @@
 "use client";
 import { Button, Flex } from "antd";
-import "./Sidebar.scss";
+
 import { Gear, SquaresFour, User } from "phosphor-react";
+
+import "./sidebar.scss";
 export const SideBar = () => {
   return (
     <div className="main">

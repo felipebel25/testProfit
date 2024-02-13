@@ -2,8 +2,8 @@
 
 import { DetailsProjectView } from "@/components/organisms/projects/DetailProjectView/DetailProjectView";
 
-function LoginPage() {
+function ReviewProjectPage() {
   return <DetailsProjectView />;
 }
 
-export default LoginPage;
+export default ReviewProjectPage;

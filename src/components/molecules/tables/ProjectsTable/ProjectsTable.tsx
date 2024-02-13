@@ -1,8 +1,9 @@
 import { Avatar, Button, Flex, Input, Table, Typography } from "antd";
 import type { TableProps } from "antd";
-import { Eye, Pencil, Plus } from "phosphor-react";
+import { DotsThree, Eye, Plus } from "phosphor-react";
 
-import "./projectsTable.scss";
+import "./projectstable.scss";
+import { FilterUsers } from "@/components/atoms/FilterUsers/FilterUsers";
 interface DataType {
   key: string;
   name: string;
@@ -23,13 +24,7 @@ const columns: TableProps<DataType>["columns"] = [
       <Avatar
         shape="square"
         size={70}
-        src={
-          <img
-            src={"/images/login/01-example-login-logo.png"}
-            style={{ objectFit: "contain" }}
-            alt="avatar"
-          />
-        }
+        src={<img src={"/images/cruz-verde.png"} style={{ objectFit: "contain" }} alt="avatar" />}
       />
     )
   },
@@ -74,19 +69,19 @@ const columns: TableProps<DataType>["columns"] = [
     dataIndex: "divisas",
     render: (text) => <Text>{text}</Text>
   },
+  // {
+  //   title: "",
+  //   key: "",
+  //   dataIndex: "",
+  //   width: "40px",
+  //   render: () => <Button href="/proyectos/edit/cruzverde" icon={<Pencil size={"1.3rem"} />} />
+  // },
   {
     title: "",
     key: "",
-    dataIndex: "",
-    width: "40px",
-    render: () => <Button icon={<Pencil size={"1.3rem"} />} />
-  },
-  {
-    title: "",
-    key: "",
     width: "40px",
     dataIndex: "",
-    render: () => <Button href="/proyectos/cruzverde" icon={<Eye size={"1.3rem"} />} />
+    render: () => <Button href="/proyectos/review/cruzverde" icon={<Eye size={"1.3rem"} />} />
   }
 ];
 
@@ -165,11 +160,20 @@ const data: DataType[] = [
 
 const { Search } = Input;
 
-const ProjectTabel: React.FC = () => {
+const ProjectTable: React.FC = () => {
   return (
     <main className="mainProjectsTable">
       <Flex justify="space-between" className="mainProjectsTable_header">
-        <Search size="large" placeholder="input search text" style={{ width: 300 }} />
+        <Flex gap={"1.75rem"}>
+          <Search
+            className="inputSearch"
+            size="large"
+            placeholder="Buscar"
+            style={{ width: 300 }}
+          />
+          <FilterUsers />
+          <Button size="large" icon={<DotsThree size={"1.5rem"} />} />
+        </Flex>
         <Button
           type="primary"
           className="buttonNewProject"
@@ -185,4 +189,4 @@ const ProjectTabel: React.FC = () => {
   );
 };
 
-export default ProjectTabel;
+export default ProjectTable;

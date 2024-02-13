@@ -2,10 +2,11 @@
 import { Flex, Typography } from "antd";
 import { SideBar } from "@/components/molecules/SideBar/SideBar";
 import ProjectTable from "@/components/molecules/tables/ProjectsTable/ProjectsTable";
-import "./projects.scss";
-import { NotificationButton } from "@/components/atoms/NotificationButton/NotificationButton";
+import { NavRightSection } from "@/components/atoms/NavRightSection/NavRightSection";
 
-const { Title } = Typography;
+import "./projects.scss";
+
+const { Title, Text } = Typography;
 
 export const ProjectsView = () => {
   return (
@@ -13,10 +14,13 @@ export const ProjectsView = () => {
       <SideBar />
       <Flex vertical className="contentProject">
         <Flex justify="space-between" align="center">
-          <Title className="titleProjects" level={1}>
-            Proyectos
-          </Title>
-          <NotificationButton />
+          <Flex gap={"1rem"} align="center">
+            <Title level={1} className="titleName">
+              Cruz Verde
+            </Title>
+            <Text className="subtitleNit">NIT 10122012334-5</Text>
+          </Flex>
+          <NavRightSection />
         </Flex>
         <ProjectTable />
       </Flex>

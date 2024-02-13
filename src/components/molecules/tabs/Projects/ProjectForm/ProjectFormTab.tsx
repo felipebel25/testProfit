@@ -1,5 +1,16 @@
-import { Button, Flex, Input, Select, SelectProps, Space, Typography } from "antd";
-import { Info, Pencil } from "phosphor-react";
+import {
+  Button,
+  ColorPicker,
+  Flex,
+  Input,
+  Select,
+  SelectProps,
+  Space,
+  Typography,
+  Upload
+} from "antd";
+import { Controller, useForm } from "react-hook-form";
+import { CaretLeft, Pencil } from "phosphor-react";
 
 import "./projectformtab.scss";
 
@@ -7,101 +18,240 @@ const { Title, Text } = Typography;
 const { TextArea } = Input;
 
 interface Props {
-  onIsEditProject: () => void;
+  onEditProject?: () => void;
+  onSubmitForm: () => void;
+  data?: ProyectType;
+  statusForm: "create" | "edit" | "review";
 }
+type ProyectType = {
+  general: {
+    name: string;
+    nit: string;
+    currencies: string[];
+    countries: string[];
+    address: string;
+  };
+  contact: {
+    name: string;
+    position: string;
+    email: string;
+    phone: string;
+  };
+  personalizacion: {
+    color: string;
+    description: string;
+  };
+};
+export const ProjectFormTab = ({
+  onEditProject = () => {},
+  onSubmitForm = () => {},
+  statusForm = "review",
+  data = initialData
+}: Props) => {
+  const defaultValues = statusForm === "create" ? {} : data;
+  const { control } = useForm<ProyectType>({
+    defaultValues,
+    disabled: statusForm === "review"
+  });
 
-export const ProjectFormTab = ({ onIsEditProject }: Props) => {
+  const validationButtonText =
+    statusForm === "create"
+      ? "Crear Proyecto"
+      : statusForm === "edit"
+        ? "Guardar Cambios"
+        : " Editar Proyecto";
+  const onSubmit = () => {
+    if (statusForm === "review") return onEditProject();
+    onSubmitForm();
+  };
+
   return (
-    <main className="mainProyectsForm">
-      <Flex vertical component={"section"}>
-        <Flex component={"header"} className="headerProyectsForm" justify="space-between">
-          <Flex align="center">
-            <Info size={"1.8rem"} />
-            <Title level={2} style={{ marginLeft: "1rem", marginBottom: "0" }}>
-              Información del proyecto
-            </Title>
+    <form className="mainProyectsForm">
+      <Flex component={"header"} className="headerProyectsForm">
+        <Button
+          type="text"
+          size="large"
+          href="/"
+          className="buttonGoBack"
+          icon={<CaretLeft size={"1.45rem"} />}
+        >
+          Ver Proyectos
+        </Button>
+        <Button style={{ display: "flex" }} icon={<Pencil size={"1.45rem"} />} onClick={onSubmit}>
+          {validationButtonText}
+        </Button>
+      </Flex>
+      <Flex component={"main"} vertical>
+        {/* ------------Image Project-------------- */}
+        <Flex vertical className="imageSection">
+          <Upload listType="picture-card" style={{ width: "20%" }}>
+            {"+ Subir"}
+          </Upload>
+          <Text>*Sube la imagen del logo del proyecto que vas a crear</Text>
+        </Flex>
+        {/* -----------------------------------General--------------------------------------- */}
+        <Title level={4}>Informacion General</Title>
+        <Flex component={"section"} className="generalProject" justify="flex-start">
+          <Flex vertical className="containerInput">
+            <Title level={5}>Nombre del Proyecto</Title>
+            <Controller
+              name="general.name"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  className="input"
+                  variant="borderless"
+                  placeholder="Nombre del Proyecto"
+                  {...field}
+                />
+              )}
+            />
           </Flex>
-          <Flex gap={"1rem"}>
-            <Button className="buttonAction" icon={<Pencil size="1.45rem" />} size="large">
-              Guardar
-            </Button>
-            <Button size="large" className="buttonAction" onClick={onIsEditProject}>
-              Descartar
-            </Button>
+          <Flex vertical className="containerInput">
+            <Title level={5}>NIT</Title>
+            <Controller
+              name="general.nit"
+              control={control}
+              render={({ field }) => (
+                <Input className="input" variant="borderless" placeholder="NIT" {...field} />
+              )}
+            />
+          </Flex>
+          <Flex vertical className="containerInput">
+            <Title level={5}>Divisas</Title>
+            <Controller
+              name="general.currencies"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  mode="multiple"
+                  className="selectInput"
+                  placeholder="select one country"
+                  // onChange={handleChange}
+                  optionLabelProp="label"
+                  variant="borderless"
+                  options={options}
+                  optionRender={(option) => (
+                    <Space>
+                      <span role="img" aria-label={option.data.label}>
+                        {option.data.emoji}
+                      </span>
+                      <Text style={{ color: "white" }}>{option.data.desc}</Text>
+                    </Space>
+                  )}
+                  {...field}
+                />
+              )}
+            />
+          </Flex>
+          <Flex vertical className="containerInput">
+            <Title level={5}>Pais</Title>
+            <Controller
+              name="general.countries"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  mode="multiple"
+                  className="selectInput"
+                  placeholder="select one country"
+                  // onChange={handleChange}
+                  optionLabelProp="label"
+                  variant="borderless"
+                  options={options}
+                  optionRender={(option) => (
+                    <Space>
+                      <span role="img" aria-label={option.data.label}>
+                        {option.data.emoji}
+                      </span>
+                      <Text style={{ color: "white" }}>{option.data.desc}</Text>
+                    </Space>
+                  )}
+                  {...field}
+                />
+              )}
+            />
+          </Flex>
+          <Flex vertical className="containerInput">
+            <Title level={5}>Direccion</Title>
+            <Controller
+              name="general.address"
+              control={control}
+              render={({ field }) => (
+                <Input className="input" variant="borderless" placeholder="Direccion" {...field} />
+              )}
+            />
           </Flex>
         </Flex>
-        <Flex gap={"4rem"} component={"main"}>
-          {/* -----------------------------------General--------------------------------------- */}
-          <Flex component={"section"} vertical className="generalProject">
-            <Title level={3}>General</Title>
-            <Title level={4}>Nombre del Proyecto</Title>
-            <Input className="input" variant="borderless" placeholder="Nombre del Proyecto" />
-            <Title level={4}>NIT</Title>
-            <Input className="input" variant="borderless" placeholder="NIT" />
-            <Title level={4}>Divisas</Title>
-            <Select
-              mode="multiple"
-              className="selectInput"
-              placeholder="select one country"
-              defaultValue={["china"]}
-              // onChange={handleChange}
-              optionLabelProp="label"
-              variant="borderless"
-              options={options}
-              optionRender={(option) => (
-                <Space>
-                  <span role="img" aria-label={option.data.label}>
-                    {option.data.emoji}
-                  </span>
-                  <Text style={{ color: "white" }}>{option.data.desc}</Text>
-                </Space>
+        {/* -----------------------------------Contacto----------------------------------- */}
+        <Title level={4}>Informacion de Contacto</Title>
+        <Flex component={"section"} className="generalProject" justify="flex-start">
+          <Flex vertical className="containerInput">
+            <Title level={5}>Nombre</Title>
+            <Controller
+              name="contact.name"
+              control={control}
+              render={({ field }) => (
+                <Input className="input" variant="borderless" placeholder="Nombre" {...field} />
               )}
             />
-            <Title level={4}>Pais</Title>
-            <Select
-              mode="multiple"
-              className="selectInput"
-              placeholder="select one country"
-              defaultValue={["china"]}
-              // onChange={handleChange}
-              optionLabelProp="label"
-              variant="borderless"
-              options={options}
-              optionRender={(option) => (
-                <Space>
-                  <span role="img" aria-label={option.data.label}>
-                    {option.data.emoji}
-                  </span>
-                  <Text style={{ color: "white" }}>{option.data.desc}</Text>
-                </Space>
+          </Flex>
+          <Flex vertical className="containerInput">
+            <Title level={5}>Posicion</Title>
+            <Controller
+              name="contact.position"
+              control={control}
+              render={({ field }) => (
+                <Input className="input" variant="borderless" placeholder="Posicion" {...field} />
               )}
             />
-            <Title level={4}>Direccion</Title>
-            <Input className="input" variant="borderless" placeholder="Direccion" />
           </Flex>
-          {/* -----------------------------------Contacto----------------------------------- */}
-          <Flex component={"section"} vertical className="generalProject">
-            <Title level={3}>Contacto</Title>
-            <Title level={4}>Nombre</Title>
-            <Input className="input" variant="borderless" placeholder="Nombre" />
-            <Title level={4}>Posicion</Title>
-            <Input className="input" variant="borderless" placeholder="Posicion" />
-            <Title level={4}>Correo</Title>
-            <Input className="input" variant="borderless" placeholder="Correo" />
-            <Title level={4}>Telefono</Title>
-            <Input className="input" variant="borderless" placeholder="Telefono" />
+          <Flex vertical className="containerInput">
+            <Title level={5}>Correo</Title>
+            <Controller
+              name="contact.email"
+              control={control}
+              render={({ field }) => (
+                <Input className="input" variant="borderless" placeholder="Correo" {...field} />
+              )}
+            />
           </Flex>
-          {/* -----------------------------------Experiencia----------------------------------- */}
-          <Flex component={"section"} vertical className="generalProject">
-            <Title level={3}>Experiencia</Title>
-            <Title level={4}>Color Indicativo</Title>
-            <Input className="input" variant="borderless" placeholder="Color Indicativo" />
-            <Title level={4}>Descripcion</Title>
-            <TextArea className="input" variant="borderless" placeholder="Descripcion" rows={4} />
+          <Flex vertical className="containerInput">
+            <Title level={5}>Telefono</Title>
+            <Controller
+              name="contact.phone"
+              control={control}
+              render={({ field }) => (
+                <Input className="input" variant="borderless" placeholder="Telefono" {...field} />
+              )}
+            />
+          </Flex>
+        </Flex>
+        {/* -----------------------------------Experiencia----------------------------------- */}
+        <Title level={4}>Personalizer Proyecto</Title>
+        <Flex component={"section"} className="generalProject" justify="flex-start">
+          <Flex vertical className="containerInput">
+            <Title level={5}>Color Personalizado</Title>
+            <ColorPicker defaultValue="#1677ff" size="large" showText />
+          </Flex>
+          <Flex vertical className="containerInput">
+            <Title level={5}>Descripcion</Title>
+            <Controller
+              name="personalizacion.description"
+              control={control}
+              render={({ field }) => (
+                <TextArea
+                  rows={2}
+                  className="input"
+                  variant="borderless"
+                  placeholder="Ingresar Descripcion"
+                  {...field}
+                />
+              )}
+            />
           </Flex>
         </Flex>
       </Flex>
-    </main>
+    </form>
   );
 };
 const options: SelectProps["options"] = [
@@ -130,3 +280,23 @@ const options: SelectProps["options"] = [
     desc: "Korea (韩国)"
   }
 ];
+
+const initialData: ProyectType = {
+  general: {
+    name: "Cruz Verde",
+    nit: "01-123456789",
+    currencies: ["china"],
+    address: "Chapinero, Bogota DC, Colombia",
+    countries: ["china"]
+  },
+  contact: {
+    name: "Falcao Garcia",
+    position: "Delantero",
+    email: "tigre@gmaill.com",
+    phone: "57 9999999"
+  },
+  personalizacion: {
+    color: "#FFFFFF",
+    description: "The best color"
+  }
+};

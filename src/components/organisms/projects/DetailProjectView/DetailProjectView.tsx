@@ -1,29 +1,40 @@
-import { Button, Flex, Image, Tabs, TabsProps, Typography } from "antd";
-import { CaretLeft, CaretRight, ClipboardText } from "phosphor-react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Flex, Tabs, TabsProps, Typography } from "antd";
 
 import { SideBar } from "@/components/molecules/SideBar/SideBar";
-import { ProjectInfoTab } from "@/components/molecules/tabs/Projects/ProjectInfo/ProjectInfoTab";
-import { useState } from "react";
 import { ProjectFormTab } from "@/components/molecules/tabs/Projects/ProjectForm/ProjectFormTab";
-import { PricesStatus } from "@/components/atoms/PricesStatus/PricesStatus";
-import { NotificationButton } from "@/components/atoms/NotificationButton/NotificationButton";
+import { NavRightSection } from "@/components/atoms/NavRightSection/NavRightSection";
+
+import { UsersProjectTable } from "@/components/molecules/tables/UsersProjectTable/UsersProjectTable";
+import { UserProjectForm } from "@/components/molecules/tabs/Projects/UserProjectForm/UserProjectForm";
 
 import "./detailproject.scss";
 
 const { Title, Text } = Typography;
+interface Props {
+  isEdit?: boolean;
+}
 
-export const DetailsProjectView = () => {
-  const { push } = useRouter();
-  const [isEditProject, setIsEditProject] = useState(false);
+export const DetailsProjectView = ({ isEdit = false }: Props) => {
+  const [isEditProject, setIsEditProject] = useState(isEdit);
+  const [isCreateUser, setIsCreateUser] = useState(false);
+  const [isViewDetailsUser, setIsViewDetailsUser] = useState(false);
+
+  const onGoBackTableUsers = () => {
+    setIsCreateUser(false);
+    setIsViewDetailsUser(false);
+  };
+
   const items: TabsProps["items"] = [
     {
       key: "1",
-      label: "Proyectos",
-      children: isEditProject ? (
-        <ProjectFormTab onIsEditProject={() => setIsEditProject(false)} />
-      ) : (
-        <ProjectInfoTab onIsEditProject={() => setIsEditProject(true)} />
+      label: "Proyecto",
+      children: (
+        <ProjectFormTab
+          onSubmitForm={() => {}}
+          statusForm={isEditProject ? "edit" : "review"}
+          onEditProject={() => setIsEditProject(true)}
+        />
       )
     },
     {
@@ -33,6 +44,27 @@ export const DetailsProjectView = () => {
     },
     {
       key: "3",
+      label: "Clientes",
+      children: "Content of Tab Pane 3"
+    },
+    {
+      key: "4",
+      label: "Usuarios",
+      children:
+        isCreateUser || isViewDetailsUser ? (
+          <UserProjectForm
+            onGoBackTable={onGoBackTableUsers}
+            isViewDetailsUser={isViewDetailsUser}
+          />
+        ) : (
+          <UsersProjectTable
+            setIsViewDetails={setIsViewDetailsUser}
+            setIsCreateUser={setIsCreateUser}
+          />
+        )
+    },
+    {
+      key: "5",
       label: "Cuentas",
       children: "Content of Tab Pane 3"
     }
@@ -43,52 +75,26 @@ export const DetailsProjectView = () => {
       <SideBar />
       <Flex vertical className="containerDetailProject">
         <Flex component={"navbar"} align="center" justify="space-between">
-          <Flex align="center">
-            <Button
-              type="text"
-              size="large"
-              href="/"
-              className="buttonGoBack"
-              icon={<CaretLeft size={"1.45rem"} />}
-            >
-              Volver
-            </Button>
-            <Text className="divider">|</Text>
-            <ClipboardText className="icon" size={"1.55rem"} />
-            <CaretRight className="icon" size={"1.75rem"} />
-            <Text className="rutesText" onClick={() => push("/")}>
-              Todos los proyectos{" "}
-            </Text>
-            <CaretRight className="icon" size={"1.75rem"} />
-            <Text className="rutesText">Cruz Verde Detalles </Text>
+          <Flex className="infoHeaderProject">
+            <Flex gap={"2rem"} align="center">
+              <Title level={1} className="titleName">
+                Cruz Verde
+              </Title>
+              <Text className="subtitleNit">NIT 10122012334-5</Text>
+            </Flex>
           </Flex>
           <Flex align="center">
-            <PricesStatus />
-            <NotificationButton />
+            <NavRightSection />
           </Flex>
         </Flex>
-        <Flex className="infoHeaderProject">
-          <Flex>
-            {/* ------------Image Project-------------- */}
-            <Image
-              height={"7rem"}
-              src="/images/cruz-verde.png"
-              alt="Cruz verde png"
-              className="imageProject"
-            />
-          </Flex>
-          {/* ------------Main Info Project-------------- */}
-          <Flex vertical>
-            <Title level={1} className="titleName">
-              Cruz Verde
-            </Title>
-            <Title level={4} className="subtitleNit">
-              NIT 10122012334-5
-            </Title>
-          </Flex>
-        </Flex>
+        {/* ------------Main Info Project-------------- */}
         <Flex className="tabsContainer">
-          <Tabs defaultActiveKey="1" items={items} size="large" />
+          <Tabs
+            style={{ width: "100%", height: "100%" }}
+            defaultActiveKey="1"
+            items={items}
+            size="large"
+          />
         </Flex>
       </Flex>
     </main>

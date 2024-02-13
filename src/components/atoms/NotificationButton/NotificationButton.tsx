@@ -1,6 +1,15 @@
 import { Button } from "antd";
 import { Bell } from "phosphor-react";
 
+import "./notificationbutton.scss";
+
 export const NotificationButton = () => {
-  return <Button type="text" size="large" icon={<Bell size={"1.5rem"} weight="fill" />} />;
+  return (
+    <Button
+      type="primary"
+      size="large"
+      className="notificationbutton"
+      icon={<Bell size="1.5rem" />}
+    />
+  );
 };

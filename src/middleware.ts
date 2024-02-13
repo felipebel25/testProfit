@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 export async function middleware(request: NextRequest) {
   const session = request.cookies.get(process.env.COOKIE_SESSION_NAME ?? "");
 
+  //TODO: logica para devolvernos a proyectos si entramos al login si estamos logeados y con token
+
   //Regresar a /login si no hay cookie de sesion
   if (!session) {
     return NextResponse.redirect(new URL("/auth/login", request.url));

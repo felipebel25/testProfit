@@ -23,7 +23,9 @@ const schema = yup.object().shape({
   password: yup.string().min(5).max(32).required()
 });
 export const LoginForm = () => {
+  const router = useRouter();
   const { Text, Title } = Typography;
+  const [isLoading, setIsLoading] = useState(false);
   const { control, handleSubmit, reset } = useForm<IAuthLogin>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -31,7 +33,6 @@ export const LoginForm = () => {
       password: ""
     }
   });
-  const router = useRouter();
   const [api, contextHolder] = notification.useNotification();
 
   const openNotification = (placement: NotificationPlacement) => {
@@ -49,9 +50,11 @@ export const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmitHandler = async ({ email, password }: IAuthLogin) => {
-    getAuth(email.trim(), password, router, false, () => openNotification("topRight"));
+    setIsLoading(true);
+    await getAuth(email.trim(), password, router, false, () => openNotification("topRight"));
     reset();
   };
+  console.log(isLoading);
 
   return (
     <form className={"form"} onSubmit={handleSubmit(onSubmitHandler)}>
@@ -96,8 +99,8 @@ export const LoginForm = () => {
         )}
       />
       <Flex className={"buttonContainer"}>
-        <Button className="button" htmlType="submit">
-          Ingresar
+        <Button disabled={isLoading} loading={isLoading} className="button" htmlType="submit">
+          {isLoading ? "Cargando..." : "Ingresar"}
         </Button>
         <Text underline className={"textForgotPassword"}>
           Olvide mi contraseña
