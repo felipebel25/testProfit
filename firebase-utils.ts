@@ -1,7 +1,6 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
 
-// eslint-disable-next-line no-unused-vars
 const getAuth = async (
   email: string,
   password: string,
@@ -44,7 +43,6 @@ const getAuth = async (
       })
       .catch(() => {
         openNotification();
-        // alert(`Login failed: ${error.message} - ${error.code}`);
       });
   }
 };

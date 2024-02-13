@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import LoginPage from "./page"; // import your Demo's page
+import LoginPage from "./page";
 
 export const metadata: Metadata = {
   title: "Crear Proyecto",
