@@ -3,17 +3,51 @@
 .mainProjectsTable {
     box-shadow: -6px 6px 32px 0px rgba(0, 0, 0, 0.2);
     border-radius: 15px;
-    padding: 2rem;
-    margin-top: 2rem;
+    padding: 1rem 2rem;
+    padding-bottom: 0;
+    margin-top: 1.5rem;
+    width: 100%;
     .mainProjectsTable_header {
-        margin: 2rem 0;
+        margin: 1rem 0;
     }
-    .inputSearch{
-         &::placeholder{
+
+    .statusContainerInactive {
+        padding: .25rem .5rem;
+        border-radius: 1rem;
+        width: auto;
+        border: 1px solid red;
+
+    }
+
+    .statusContainerActive {
+        padding: .25rem .4rem;
+        border-radius: 1rem;
+        width: auto;
+        border: 1px solid $active;
+    }
+
+
+    .statusActive {
+        width: .75rem;
+        height: .75rem;
+        border-radius: 1rem;
+        margin-right: .5rem;
+        background-color: $active ;
+    }
+    .statusInactive {
+        width: .75rem;
+        height: .75rem;
+        border-radius: 1rem;
+        margin-right: .5rem;
+        background-color: red ;
+    }
+
+    .inputSearch {
+        &::placeholder {
             color: black !important;
-         }
-         
+        }
     }
+
     .buttonNewProject {
         background-color: $secondary;
         color: black;

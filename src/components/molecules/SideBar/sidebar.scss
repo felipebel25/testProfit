@@ -1,34 +1,41 @@
 @import '../../../styles/variables';
 
-.main{
+.main {
     width: 90px;
-    height:100%;
+    height: 100%;
     background-color: $white;
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
+    padding: 3rem 0;
+    padding-top: 5rem;
     position: relative;
     box-shadow: 7px 1px 5px 2px #f0f0f0;
-    .containerButtons{
-        margin-top: 13rem;
+
+
+    .logoContainer {
+        margin-bottom: 2rem;
     }
-    .buttonIcon{
+
+    .buttonIcon {
         margin: 1rem;
         background-color: $secondary;
         box-shadow: none;
-        
-        &:hover{
+
+        &:hover {
             background-color: $secondary !important;
         }
     }
-    .buttonIconActive{
+
+    .buttonIconActive {
         margin: 1rem;
         background-color: transparent;
         color: $secondary-gray;
         box-shadow: none;
-        &:hover{
+
+        &:hover {
             background-color: $secondary !important;
         }
     }

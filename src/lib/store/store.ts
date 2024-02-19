@@ -1,7 +1,10 @@
 import { UserSlice, createUserSlice } from "@/lib/slices/createProductSlice";
-import { create } from "zustand";
-type StoreState = UserSlice;
+import { ProjectSlice, createProjectSlice } from "@/lib/slices/createProjectSlice";
 
-export const useAppStore = create<StoreState>()((...a) => ({
-  ...createUserSlice(...a)
+import { create } from "zustand";
+interface AppStore extends ProjectSlice, UserSlice {}
+
+export const useAppStore = create<AppStore>()((...a) => ({
+  ...createUserSlice(...a),
+  ...createProjectSlice(...a)
 }));

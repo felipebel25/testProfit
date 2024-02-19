@@ -54,7 +54,6 @@ export const LoginForm = () => {
     await getAuth(email.trim(), password, router, false, () => openNotification("topRight"));
     reset();
   };
-  console.log(isLoading);
 
   return (
     <form className={"form"} onSubmit={handleSubmit(onSubmitHandler)}>

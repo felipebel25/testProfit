@@ -1,9 +1,9 @@
 import { ConfigProvider } from "antd";
 import theme from "@/theme/themeConfig";
-import "../styles/globals.scss";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-
 import { Poppins } from "@next/font/google";
+
+import "../styles/globals.scss";
 
 export const poppins = Poppins({
   subsets: ["latin"],
