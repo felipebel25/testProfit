@@ -1,0 +1,24 @@
+export interface IUpdateFormProject {
+  general: General;
+  contact: Contact;
+  personalization: Personalization;
+}
+
+export interface Contact {
+  name: string;
+  position: string;
+  email: string;
+  phone: string;
+}
+
+export interface General {
+  name: string;
+  nit: string;
+  currencies: string[];
+  country: string;
+  address: string;
+}
+
+export interface Personalization {
+  color: string | any;
+}

@@ -28,7 +28,6 @@ const getAuth = async (
   } else {
     signInWithEmailAndPassword(auth, email.trim(), password)
       .then(async (userCred) => {
-        console.log(userCred);
         fetch("/api/auth", {
           method: "POST",
           headers: {

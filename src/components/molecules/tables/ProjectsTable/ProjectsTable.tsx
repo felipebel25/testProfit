@@ -1,166 +1,27 @@
+import { useEffect } from "react";
 import { Avatar, Button, Flex, Input, Table, Typography } from "antd";
 import type { TableProps } from "antd";
 import { DotsThree, Eye, Plus } from "phosphor-react";
 
-import "./projectstable.scss";
 import { FilterUsers } from "@/components/atoms/FilterUsers/FilterUsers";
-interface DataType {
-  key: string;
-  name: string;
-  pais: string;
-  address: string;
-  contacts: string;
-  telefono: string;
-  usuarios: string;
-  divisas: string;
-}
+
+import { useProjects } from "@/hooks/useProjects";
+import { useAppStore } from "@/lib/store/store";
+import { IProject } from "@/types/projects/IProjects";
+
+import "./projectstable.scss";
+
 const { Text } = Typography;
-const columns: TableProps<DataType>["columns"] = [
-  {
-    title: "Proyecto",
-    dataIndex: "name",
-    key: "name",
-    render: () => (
-      <Avatar
-        shape="square"
-        size={70}
-        src={<img src={"/images/cruz-verde.png"} style={{ objectFit: "contain" }} alt="avatar" />}
-      />
-    )
-  },
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    render: (text) => <Text>{text}</Text>
-  },
-  {
-    title: "Pais",
-    dataIndex: "pais",
-    key: "pais",
-    render: (text) => <Text>{text}</Text>
-  },
-  {
-    title: "Direccion",
-    dataIndex: "address",
-    key: "address"
-  },
-  {
-    title: "Contacts",
-    key: "contacts",
-    dataIndex: "contacts",
-    render: (text) => <Text>{text}</Text>
-  },
-  {
-    title: "Telefono",
-    key: "telefono",
-    dataIndex: "telefono",
-    render: (text) => <Text>{text}</Text>
-  },
-  {
-    title: "Usuarios",
-    key: "usuarios",
-    dataIndex: "usuarios",
-    render: (text) => <Text>{text}</Text>
-  },
-  {
-    title: "Divisas",
-    key: "divisas",
-    dataIndex: "divisas",
-    render: (text) => <Text>{text}</Text>
-  },
-  // {
-  //   title: "",
-  //   key: "",
-  //   dataIndex: "",
-  //   width: "40px",
-  //   render: () => <Button href="/proyectos/edit/cruzverde" icon={<Pencil size={"1.3rem"} />} />
-  // },
-  {
-    title: "",
-    key: "",
-    width: "40px",
-    dataIndex: "",
-    render: () => <Button href="/proyectos/review/cruzverde" icon={<Eye size={"1.3rem"} />} />
-  }
-];
-
-const data: DataType[] = [
-  {
-    key: "1",
-    name: "John Brown",
-    pais: "Colombia",
-    contacts: "Falcao Garcia",
-    address: "New York No. 1 Lake Park",
-    telefono: "+57 3227049632",
-    usuarios: "69",
-    divisas: "USD"
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    pais: "Colombia",
-    contacts: "Falcao Garcia",
-    address: "London No. 1 Lake Park",
-    telefono: "+57 3227049632",
-    usuarios: "69",
-    divisas: "USD"
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    pais: "Colombia",
-    address: "Sydney No. 1 Lake Park",
-    contacts: "Falcao Garcia",
-    telefono: "+57 3227049632",
-    usuarios: "69",
-    divisas: "USD"
-  },
-  {
-    key: "4",
-    name: "Joe Black",
-    pais: "Colombia",
-    address: "Sydney No. 1 Lake Park",
-    contacts: "Falcao Garcia",
-    telefono: "+57 3227049632",
-    usuarios: "69",
-    divisas: "USD"
-  },
-  {
-    key: "5",
-    name: "Joe Black",
-    pais: "Colombia",
-    address: "Sydney No. 1 Lake Park",
-    contacts: "Falcao Garcia",
-    telefono: "+57 3227049632",
-    usuarios: "69",
-    divisas: "USD"
-  },
-  {
-    key: "6",
-    name: "Joe Black",
-    pais: "Colombia",
-    address: "Sydney No. 1 Lake Park",
-    contacts: "Falcao Garcia",
-    telefono: "+57 3227049632",
-    usuarios: "69",
-    divisas: "USD"
-  },
-  {
-    key: "7",
-    name: "Joe Black",
-    pais: "Colombia",
-    address: "Sydney No. 1 Lake Park",
-    contacts: "Falcao Garcia",
-    telefono: "+57 3227049632",
-    usuarios: "69",
-    divisas: "USD"
-  }
-];
-
 const { Search } = Input;
 
-const ProjectTable: React.FC = () => {
+export const ProjectTable = () => {
+  const { loading, data } = useProjects({ page: 1 });
+  const projects = useAppStore((state) => state.projects);
+  const setProjects = useAppStore((state) => state.getProjects);
+  useEffect(() => {
+    setProjects(data.data);
+  }, [data, setProjects]);
+
   return (
     <main className="mainProjectsTable">
       <Flex justify="space-between" className="mainProjectsTable_header">
@@ -184,9 +45,110 @@ const ProjectTable: React.FC = () => {
           Nuevo Proyecto
         </Button>
       </Flex>
-      <Table columns={columns} dataSource={data} />
+      <Table
+        loading={loading}
+        scroll={{ y: "61dvh", x: undefined }}
+        columns={columns as TableProps<any>["columns"]}
+        pagination={{ pageSize: 25 }}
+        dataSource={projects}
+      />
     </main>
   );
 };
 
-export default ProjectTable;
+const columns: TableProps<IProject>["columns"] = [
+  {
+    title: "Proyecto",
+    dataIndex: "name",
+    width: "140px",
+    key: "name",
+    render: () => (
+      <Avatar
+        shape="square"
+        size={70}
+        src={<img src={"/images/cruz-verde.png"} style={{ objectFit: "contain" }} alt="avatar" />}
+      />
+    )
+  },
+  {
+    title: "Name",
+    // width: "150px",
+    dataIndex: "PROJECT_DESCRIPTION",
+    key: "PROJECT_DESCRIPTION",
+    render: (text) => <Text>{text}</Text>
+  },
+  {
+    title: "Pais",
+    // width: "150px",
+    dataIndex: "COUNTRY_NAME",
+    key: "COUNTRY_NAME",
+    render: (text) => <Text>{text}</Text>
+  },
+  {
+    title: "Direccion",
+    dataIndex: "ADDRESS",
+    // width: "165px",
+    key: "ADDRESS"
+  },
+  {
+    title: "Contact",
+    key: "CONTACT",
+    // width: "155px",
+    dataIndex: "CONTACT",
+    render: (text) => <Text>{text}</Text>
+  },
+  {
+    title: "Telefono",
+    key: "PHONE",
+    // width: "160px",
+    dataIndex: "PHONE",
+    render: (text) => <Text>{text}</Text>
+  },
+  {
+    title: "Usuarios",
+    key: "NUMBER_USERS",
+    width: "120px",
+    dataIndex: "NUMBER_USERS",
+    render: (text) => <Text>{text}</Text>
+  },
+  {
+    title: "Divisas",
+    key: "CURRENCY",
+    width: "140px",
+    dataIndex: "CURRENCY",
+    render: (_, { CURRENCY }) => {
+      return (
+        <>
+          {CURRENCY.map(({ CURRENCY_NAME, currency_name = "", id }) => {
+            const currencyName = CURRENCY_NAME ?? currency_name;
+            return <Text key={`${id}-${currencyName}`}>{currencyName.toUpperCase() + " "}</Text>;
+          })}
+        </>
+      );
+    }
+  },
+  {
+    title: "Estado",
+    key: "status",
+    width: "140px",
+    dataIndex: "status",
+    render: (_, { IS_ACTIVE }) => (
+      <Flex
+        align="center"
+        className={IS_ACTIVE ? "statusContainerActive" : "statusContainerInactive"}
+      >
+        <div className={IS_ACTIVE ? "statusActive" : "statusInactive"} />
+        <Text>{IS_ACTIVE ? "Activo" : "Desactivado"}</Text>
+      </Flex>
+    )
+  },
+  {
+    title: "",
+    key: "buttonSee",
+    width: "60px",
+    dataIndex: "",
+    render: (_, { ID }) => (
+      <Button href={`/proyectos/review/${ID}`} icon={<Eye size={"1.3rem"} />} />
+    )
+  }
+];

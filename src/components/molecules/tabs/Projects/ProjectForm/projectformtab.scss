@@ -84,7 +84,25 @@
 
         .input {
             background-color: $background;
-            margin-bottom: 1rem;
+            margin-bottom: 0.2rem;
+            border-radius: 0;
+            padding: 0.7rem;
+            border-radius: 0.25rem;
+
+            &::placeholder {
+                color: $secondary-gray;
+            }
+        }
+
+        .textError {
+            padding-left: 0.5rem;
+            color: red;
+        }
+
+        .inputError {
+            border: 1px dashed red;
+            background-color: $background;
+            margin-bottom: 0.2rem;
             border-radius: 0;
             padding: 0.7rem;
             border-radius: 0.25rem;
@@ -95,12 +113,5 @@
         }
     }
 
-    .selectInput {
-        width: 100%;
-        margin-bottom: 1rem;
-        background-color: $background;
-        padding: 0.45rem;
-        border-radius: 0.25rem;
-        border-bottom: none;
-    }
+
 }

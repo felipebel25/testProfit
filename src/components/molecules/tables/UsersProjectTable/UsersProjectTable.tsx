@@ -182,8 +182,8 @@ export const UsersProjectTable = ({ setIsCreateUser, setIsViewDetails }: Props) 
       )
     },
     {
-      title: "",
-      key: "",
+      title: "Estado",
+      key: "status",
       width: "40px",
       dataIndex: "",
       render: () => <Button onClick={() => setIsViewDetails(true)} icon={<Eye size={"1.3rem"} />} />

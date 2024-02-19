@@ -1,21 +1,32 @@
 import { useState } from "react";
-import { Flex, Tabs, TabsProps, Typography } from "antd";
+import { Flex, Skeleton, Spin, Tabs, TabsProps, Typography, message } from "antd";
 
+//components
 import { SideBar } from "@/components/molecules/SideBar/SideBar";
 import { ProjectFormTab } from "@/components/molecules/tabs/Projects/ProjectForm/ProjectFormTab";
 import { NavRightSection } from "@/components/atoms/NavRightSection/NavRightSection";
-
 import { UsersProjectTable } from "@/components/molecules/tables/UsersProjectTable/UsersProjectTable";
 import { UserProjectForm } from "@/components/molecules/tabs/Projects/UserProjectForm/UserProjectForm";
+
+// tools
+import { useProject } from "@/hooks/useProject";
+import { activateProject, desactiveProject, updateProject } from "@/services/projects/projects";
+import { SUCCESS } from "@/utils/constants/globalConstants";
+import { IUpdateFormProject } from "@/types/projects/IUpdateFormProject";
 
 import "./detailproject.scss";
 
 const { Title, Text } = Typography;
 interface Props {
   isEdit?: boolean;
+  idProjectParam: string;
 }
 
-export const DetailsProjectView = ({ isEdit = false }: Props) => {
+export const DetailsProjectView = ({ isEdit = false, idProjectParam = "" }: Props) => {
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const { loading, data } = useProject({ id: idProjectParam });
+
   const [isEditProject, setIsEditProject] = useState(isEdit);
   const [isCreateUser, setIsCreateUser] = useState(false);
   const [isViewDetailsUser, setIsViewDetailsUser] = useState(false);
@@ -25,16 +36,72 @@ export const DetailsProjectView = ({ isEdit = false }: Props) => {
     setIsViewDetailsUser(false);
   };
 
+  const onUpdateProject = async (data: IUpdateFormProject) => {
+    try {
+      const response = await updateProject(data, idProjectParam);
+      if (response.status === SUCCESS) {
+        messageApi.open({
+          type: "success",
+          content: "El proyecto fue editado exitosamente."
+        });
+      }
+    } catch (error) {
+      messageApi.open({
+        type: "error",
+        content: "Oops, hubo un error por favor intenta mas tarde."
+      });
+    }
+  };
+  const onActiveProject = async () => {
+    try {
+      await activateProject(idProjectParam);
+      messageApi.open({
+        type: "success",
+        content: "El proyecto fue activado exitosamente."
+      });
+    } catch (error) {
+      messageApi.open({
+        type: "error",
+        content: "Oops, hubo un error por favor intenta mas tarde."
+      });
+    }
+  };
+  const onDesactivateProject = async () => {
+    try {
+      await desactiveProject(idProjectParam);
+      messageApi.open({
+        type: "success",
+        content: "El proyecto fue desactivado exitosamente."
+      });
+    } catch (error) {
+      messageApi.open({
+        type: "error",
+        content: "Oops, hubo un error por favor intenta mas tarde."
+      });
+    }
+  };
+
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: "Proyecto",
       children: (
-        <ProjectFormTab
-          onSubmitForm={() => {}}
-          statusForm={isEditProject ? "edit" : "review"}
-          onEditProject={() => setIsEditProject(true)}
-        />
+        <>
+          {loading ? (
+            <Flex style={{ height: "30%" }} align="center" justify="center">
+              <Spin size="large" />
+            </Flex>
+          ) : (
+            <ProjectFormTab
+              onSubmitForm={onUpdateProject}
+              onEditProject={() => setIsEditProject(true)}
+              data={data}
+              statusForm={isEditProject ? "edit" : "review"}
+              onActiveProject={onActiveProject}
+              onDesactivateProject={onDesactivateProject}
+            />
+          )}
+        </>
       )
     },
     {
@@ -71,32 +138,44 @@ export const DetailsProjectView = ({ isEdit = false }: Props) => {
   ];
 
   return (
-    <main className="mainDetailProject">
-      <SideBar />
-      <Flex vertical className="containerDetailProject">
-        <Flex component={"navbar"} align="center" justify="space-between">
-          <Flex className="infoHeaderProject">
-            <Flex gap={"2rem"} align="center">
-              <Title level={1} className="titleName">
-                Cruz Verde
-              </Title>
-              <Text className="subtitleNit">NIT 10122012334-5</Text>
+    <>
+      {contextHolder}
+      <main className="mainDetailProject">
+        <SideBar />
+        <Flex vertical className="containerDetailProject">
+          <Flex component={"navbar"} align="center" justify="space-between">
+            <Flex className="infoHeaderProject">
+              <Flex gap={"2rem"} align="center" style={{ width: "100%" }}>
+                {loading ? (
+                  <>
+                    <Skeleton.Input size="large" />
+                    <Skeleton.Input size="large" />
+                  </>
+                ) : (
+                  <>
+                    <Title level={1} className="titleName">
+                      {data.PROJECT_DESCRIPTION ?? ""}
+                    </Title>
+                    <Text className="subtitleNit">NIT {data.NIT ?? ""}</Text>
+                  </>
+                )}
+              </Flex>
+            </Flex>
+            <Flex align="center">
+              <NavRightSection />
             </Flex>
           </Flex>
-          <Flex align="center">
-            <NavRightSection />
+          {/* ------------Main Info Project-------------- */}
+          <Flex className="tabsContainer">
+            <Tabs
+              style={{ width: "100%", height: "100%" }}
+              defaultActiveKey="1"
+              items={items}
+              size="large"
+            />
           </Flex>
         </Flex>
-        {/* ------------Main Info Project-------------- */}
-        <Flex className="tabsContainer">
-          <Tabs
-            style={{ width: "100%", height: "100%" }}
-            defaultActiveKey="1"
-            items={items}
-            size="large"
-          />
-        </Flex>
-      </Flex>
-    </main>
+      </main>
+    </>
   );
 };
