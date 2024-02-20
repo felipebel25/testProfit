@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { Button, Checkbox, Flex, Input, Table, Typography } from "antd";
 import type { TableProps } from "antd";
 
-import { FilterUsers } from "@/components/atoms/FilterUsers/FilterUsers";
+import { FilterUsers } from "@/components/atoms/FilterProjects/FilterProjects";
 
 import { DotsThree, Eye, Plus } from "phosphor-react";
 

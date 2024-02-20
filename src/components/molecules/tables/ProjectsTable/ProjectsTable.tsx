@@ -1,10 +1,9 @@
-import { useEffect } from "react";
-import { Avatar, Button, Flex, Input, Table, Typography } from "antd";
+import { useEffect, useState } from "react";
+import { Avatar, Button, Flex, Table, Typography } from "antd";
 import type { TableProps } from "antd";
 import { DotsThree, Eye, Plus } from "phosphor-react";
 
-import { FilterUsers } from "@/components/atoms/FilterUsers/FilterUsers";
-
+import { FilterProjects } from "@/components/atoms/FilterProjects/FilterProjects";
 import { useProjects } from "@/hooks/useProjects";
 import { useAppStore } from "@/lib/store/store";
 import { IProject } from "@/types/projects/IProjects";
@@ -12,10 +11,20 @@ import { IProject } from "@/types/projects/IProjects";
 import "./projectstable.scss";
 
 const { Text } = Typography;
-const { Search } = Input;
+// const { Search } = Input;
 
 export const ProjectTable = () => {
-  const { loading, data } = useProjects({ page: 1 });
+  const [selectFilters, setSelectFilters] = useState({
+    country: 0,
+    currency: 0
+  });
+  console.log(selectFilters);
+
+  const { loading, data } = useProjects({
+    page: 1,
+    currencyId: `${selectFilters.currency}`,
+    countryId: `${selectFilters.country}`
+  });
   const projects = useAppStore((state) => state.projects);
   const setProjects = useAppStore((state) => state.getProjects);
   useEffect(() => {
@@ -26,13 +35,13 @@ export const ProjectTable = () => {
     <main className="mainProjectsTable">
       <Flex justify="space-between" className="mainProjectsTable_header">
         <Flex gap={"1.75rem"}>
-          <Search
+          {/* <Search
             className="inputSearch"
             size="large"
             placeholder="Buscar"
             style={{ width: 300 }}
-          />
-          <FilterUsers />
+          /> */}
+          <FilterProjects setSelecetedProjects={setSelectFilters} />
           <Button size="large" icon={<DotsThree size={"1.5rem"} />} />
         </Flex>
         <Button
@@ -107,7 +116,7 @@ const columns: TableProps<IProject>["columns"] = [
   {
     title: "Usuarios",
     key: "NUMBER_USERS",
-    width: "120px",
+    width: "100px",
     dataIndex: "NUMBER_USERS",
     render: (text) => <Text>{text}</Text>
   },
@@ -138,7 +147,7 @@ const columns: TableProps<IProject>["columns"] = [
         className={IS_ACTIVE ? "statusContainerActive" : "statusContainerInactive"}
       >
         <div className={IS_ACTIVE ? "statusActive" : "statusInactive"} />
-        <Text>{IS_ACTIVE ? "Activo" : "Desactivado"}</Text>
+        <Text>{IS_ACTIVE ? "Activo" : "Inactivo"}</Text>
       </Flex>
     )
   },

@@ -5,10 +5,12 @@ import { fetcher } from "@/utils/api/api";
 
 interface Props {
   page?: number;
+  countryId: string;
+  currencyId: string;
 }
 
-export const useProjects = ({ page }: Props) => {
-  const pathKey = `/project?page=${page}`;
+export const useProjects = ({ page, countryId, currencyId }: Props) => {
+  const pathKey = `/project?page=${page}&country_id=${countryId}&currency_id=${currencyId}`;
   const { data, error } = useSWR<IProjects>(pathKey, fetcher, {});
 
   return {
