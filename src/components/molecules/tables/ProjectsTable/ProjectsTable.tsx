@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Avatar, Button, Flex, Table, Typography } from "antd";
 import type { TableProps } from "antd";
-import { DotsThree, Eye, Plus } from "phosphor-react";
+import { Clipboard, DotsThree, Eye, Plus } from "phosphor-react";
 
 import { FilterProjects } from "@/components/atoms/FilterProjects/FilterProjects";
 import { useProjects } from "@/hooks/useProjects";
@@ -15,18 +15,18 @@ const { Text } = Typography;
 
 export const ProjectTable = () => {
   const [selectFilters, setSelectFilters] = useState({
-    country: 0,
-    currency: 0
+    country: [] as string[],
+    currency: [] as string[]
   });
-  console.log(selectFilters);
 
   const { loading, data } = useProjects({
     page: 1,
-    currencyId: `${selectFilters.currency}`,
-    countryId: `${selectFilters.country}`
+    currencyId: selectFilters.currency,
+    countryId: selectFilters.country
   });
   const projects = useAppStore((state) => state.projects);
   const setProjects = useAppStore((state) => state.getProjects);
+
   useEffect(() => {
     setProjects(data.data);
   }, [data, setProjects]);
@@ -49,7 +49,7 @@ export const ProjectTable = () => {
           className="buttonNewProject"
           size="large"
           href="/proyectos/new"
-          icon={<Plus size={13} />}
+          icon={<Plus weight="bold" size={14} />}
         >
           Nuevo Proyecto
         </Button>
@@ -71,12 +71,18 @@ const columns: TableProps<IProject>["columns"] = [
     dataIndex: "name",
     width: "140px",
     key: "name",
-    render: () => (
-      <Avatar
-        shape="square"
-        size={70}
-        src={<img src={"/images/cruz-verde.png"} style={{ objectFit: "contain" }} alt="avatar" />}
-      />
+    render: (_, { LOGO }) => (
+      <>
+        {LOGO ? (
+          <Avatar
+            shape="square"
+            size={70}
+            src={<img src={LOGO ?? ""} style={{ objectFit: "contain" }} alt="avatar" />}
+          />
+        ) : (
+          <Avatar shape="square" className="imageWithoutImage" size={65} icon={<Clipboard />} />
+        )}
+      </>
     )
   },
   {

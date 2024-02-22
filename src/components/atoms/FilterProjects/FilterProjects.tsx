@@ -26,29 +26,34 @@ const options: Option[] = [
   }
 ];
 interface Props {
-  setSelecetedProjects: Dispatch<SetStateAction<{ country: number; currency: number }>>;
+  setSelecetedProjects: Dispatch<SetStateAction<{ country: string[]; currency: string[] }>>;
 }
 export const FilterProjects = ({ setSelecetedProjects }: Props) => {
   const [countries, setCountries] = useState<any>([]);
   const [currencies, setCurrencies] = useState<any>([]);
+
   const [optionsList, setOptionsList] = useState(options);
   const [selectOptions, setSelectOptions] = useState([]);
+
   const onBlur = () => {
     if (selectOptions.length === 0)
       return setSelecetedProjects({
-        country: 0,
-        currency: 0
+        country: [],
+        currency: []
       });
-    const countriesFilters = selectOptions?.filter((item) => item[0] === "Pais")?.[0]?.[1] ?? 0;
+    const countriesFilters =
+      selectOptions?.filter((item) => item[0] === "Pais").map((item) => item[1]) ?? 0;
     const currenciesFilters =
-      selectOptions?.filter((item) => item[0] === "Currencia")?.[0]?.[1] ?? 0;
+      selectOptions?.filter((item) => item[0] === "Currencia").map((item) => item[1]) ?? 0;
+
     setSelecetedProjects({
       country: countriesFilters,
       currency: currenciesFilters
     });
   };
   const onChange = (value: any) => {
-    setSelectOptions(value);
+    const data = value;
+    setSelectOptions(data);
   };
 
   const loadData = async (selectedOptions: any) => {
@@ -81,12 +86,15 @@ export const FilterProjects = ({ setSelecetedProjects }: Props) => {
       style={{ width: "22rem" }}
       multiple
       size="large"
+      removeIcon
+      maxTagCount={2}
       placeholder="Filtros"
       placement="bottomRight"
-      onClear={() => setSelecetedProjects({ country: 0, currency: 0 })}
+      onClear={() => setSelecetedProjects({ country: [], currency: [] })}
       options={optionsList}
       changeOnSelect
       loadData={loadData}
+      value={selectOptions}
       onChange={onChange}
       onBlur={onBlur}
     />
