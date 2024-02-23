@@ -3,12 +3,14 @@ import { Flex, Spin, Typography, Upload, UploadProps, message } from "antd";
 import "./uploadimg.scss";
 
 interface Props {
+  imgDefault?: string;
   setImgFile: Dispatch<SetStateAction<null>>;
+  disabled?: boolean;
 }
 
-export const UploadImg = ({ setImgFile }: Props) => {
+export const UploadImg = ({ disabled = false, imgDefault = "", setImgFile }: Props) => {
   const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string>();
+  const [imageUrl, setImageUrl] = useState<string>(imgDefault);
 
   // eslint-disable-next-line no-unused-vars
   const getBase64 = (img: any, callback: (url: string) => void) => {
@@ -50,6 +52,7 @@ export const UploadImg = ({ setImgFile }: Props) => {
         action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
         beforeUpload={beforeUpload}
         onChange={handleChange}
+        disabled={disabled}
       >
         {loading && <Spin />}
         {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: "100%" }} /> : "+ Subir"}

@@ -57,7 +57,7 @@ export const ProjectFormTab = ({
   onDesactivateProject = () => {}
 }: Props) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [imageFile, setImageFile] = useState(null);
+  const [imageFile, setImageFile] = useState(data.LOGO);
   const [imageError, setImageError] = useState(false);
   const defaultValues = statusForm === "create" ? {} : dataToProjectFormData(data);
   const {
@@ -134,7 +134,11 @@ export const ProjectFormTab = ({
         </Flex>
         <Flex component={"main"} vertical>
           {/* ------------Image Project-------------- */}
-          <UploadImg setImgFile={setImageFile} />
+          <UploadImg
+            disabled={statusForm === "review"}
+            imgDefault={data.LOGO}
+            setImgFile={setImageFile}
+          />
           {imageError && <Text className="textError">{"Logo del proyecto es obligatorio *"}</Text>}
           {/* -----------------------------------General--------------------------------------- */}
           <Title level={4}>Informacion General</Title>

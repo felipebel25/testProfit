@@ -18,14 +18,19 @@ export const ProjectTable = () => {
     country: [] as string[],
     currency: [] as string[]
   });
-
+  const [page, setPage] = useState(1);
   const { loading, data } = useProjects({
-    page: 1,
+    page: page,
     currencyId: selectFilters.currency,
     countryId: selectFilters.country
   });
+
   const projects = useAppStore((state) => state.projects);
   const setProjects = useAppStore((state) => state.getProjects);
+
+  const onChangePage = (pagePagination: number) => {
+    setPage(pagePagination);
+  };
 
   useEffect(() => {
     setProjects(data.data);
@@ -58,7 +63,7 @@ export const ProjectTable = () => {
         loading={loading}
         scroll={{ y: "61dvh", x: undefined }}
         columns={columns as TableProps<any>["columns"]}
-        pagination={{ pageSize: 25 }}
+        pagination={{ pageSize: 25, total: data.pagination.total * 25, onChange: onChangePage }}
         dataSource={projects}
       />
     </main>
