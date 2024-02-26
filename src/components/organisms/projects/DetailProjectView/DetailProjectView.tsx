@@ -30,15 +30,16 @@ export const DetailsProjectView = ({ isEdit = false, idProjectParam = "" }: Prop
   const [isEditProject, setIsEditProject] = useState(isEdit);
   const [isCreateUser, setIsCreateUser] = useState(false);
   const [isViewDetailsUser, setIsViewDetailsUser] = useState(false);
+  console.log(data);
 
   const onGoBackTableUsers = () => {
     setIsCreateUser(false);
     setIsViewDetailsUser(false);
   };
 
-  const onUpdateProject = async (data: IUpdateFormProject) => {
+  const onUpdateProject = async (finalData: IUpdateFormProject) => {
     try {
-      const response = await updateProject(data, idProjectParam);
+      const response = await updateProject(finalData, idProjectParam, data.UUID);
       if (response.status === SUCCESS) {
         messageApi.open({
           type: "success",

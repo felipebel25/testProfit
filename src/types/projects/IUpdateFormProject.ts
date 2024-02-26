@@ -3,6 +3,7 @@ export interface IUpdateFormProject {
   contact: Contact;
   logo: any;
   personalization: Personalization;
+  UUID: string;
 }
 
 export interface Contact {

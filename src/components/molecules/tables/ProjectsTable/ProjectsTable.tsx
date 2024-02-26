@@ -20,7 +20,7 @@ export const ProjectTable = () => {
   });
   const [page, setPage] = useState(1);
   const { loading, data } = useProjects({
-    page: selectFilters.country.length === 0 || selectFilters.currency.length === 0 ? 1 : page,
+    page: selectFilters.country.length !== 0 || selectFilters.currency.length !== 0 ? 1 : page,
     currencyId: selectFilters.currency,
     countryId: selectFilters.country
   });
@@ -59,7 +59,7 @@ export const ProjectTable = () => {
         columns={columns as TableProps<any>["columns"]}
         pagination={{
           pageSize: 25,
-          total: data.pagination.totalPages * 25,
+          total: data.pagination.totalRows,
           onChange: onChangePage
         }}
         dataSource={projects}

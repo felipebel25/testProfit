@@ -55,7 +55,8 @@ export const addProject = async (data: ICreatePayload): Promise<ICreateProject> 
 
 export const updateProject = async (
   data: IUpdateFormProject,
-  id: string
+  id: string,
+  UUID: string
 ): Promise<ICreateProject> => {
   const token = await getIdToken();
   const currenciesFinal = data.general.currencies.map((currency) => ({
@@ -82,6 +83,7 @@ export const updateProject = async (
   };
   const formData = new FormData();
   formData.append("id", id);
+  formData.append("uuid", UUID);
   formData.append("logo", finalData.logo);
   formData.append("project_description", finalData.project_description);
   formData.append("rgb_config", finalData.rgb_config);
