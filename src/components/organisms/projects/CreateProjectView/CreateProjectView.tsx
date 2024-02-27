@@ -11,9 +11,9 @@ import { ICreatePayload } from "@/types/projects/IProjects";
 
 //vars
 import { CREATED } from "@/utils/constants/globalConstants";
+import { useRouter } from "next/navigation";
 
 import "./createproject.scss";
-import { useRouter } from "next/navigation";
 
 const { Title } = Typography;
 

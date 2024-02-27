@@ -2,8 +2,6 @@ import { Dispatch, SetStateAction } from "react";
 import { Button, Checkbox, Flex, Input, Table, Typography } from "antd";
 import type { TableProps } from "antd";
 
-import { FilterUsers } from "@/components/atoms/FilterUsers/FilterUsers";
-
 import { DotsThree, Eye, Plus } from "phosphor-react";
 
 import "./usersprojecttable.scss";
@@ -199,7 +197,7 @@ export const UsersProjectTable = ({ setIsCreateUser, setIsViewDetails }: Props) 
             placeholder="Buscar"
             style={{ width: 300 }}
           />
-          <FilterUsers />
+          {/* <FilterUsers /> */}
           <Button size="large" icon={<DotsThree size={"1.5rem"} />} />
         </Flex>
         <Button
