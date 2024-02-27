@@ -4,7 +4,7 @@ import "./uploadimg.scss";
 
 interface Props {
   imgDefault?: string;
-  setImgFile: Dispatch<SetStateAction<null>>;
+  setImgFile: Dispatch<SetStateAction<any>>;
   disabled?: boolean;
 }
 

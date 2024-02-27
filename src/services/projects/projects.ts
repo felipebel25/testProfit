@@ -84,7 +84,7 @@ export const updateProject = async (
   const formData = new FormData();
   formData.append("id", id);
   formData.append("uuid", UUID);
-  formData.append("logo", finalData.logo);
+  typeof finalData.logo !== "string" && formData.append("logo", finalData.logo);
   formData.append("project_description", finalData.project_description);
   formData.append("rgb_config", finalData.rgb_config);
   formData.append("nit", finalData.nit);
@@ -111,13 +111,17 @@ export const updateProject = async (
 export const activateProject = async (id: string): Promise<ICreateProject> => {
   const token = await getIdToken();
   try {
-    const response: ICreateProject = await axios.put(`${config.API_HOST}/project/active/${id}`, {
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${token}`
+    const response: ICreateProject = await axios.put(
+      `${config.API_HOST}/project/active/${id}`,
+      {},
+      {
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${token}`
+        }
       }
-    });
+    );
 
     return response;
   } catch (error) {

@@ -77,7 +77,7 @@ export const ProjectFormTab = ({
         : " Editar Proyecto";
 
   const onSubmit = (data: any) => {
-    if (imageFile === null) return setImageError(true);
+    if (!imageFile) return setImageError(true);
     setImageError(false);
     onSubmitForm({ ...data, logo: imageFile });
   };

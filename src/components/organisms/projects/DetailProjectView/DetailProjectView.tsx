@@ -30,7 +30,6 @@ export const DetailsProjectView = ({ isEdit = false, idProjectParam = "" }: Prop
   const [isEditProject, setIsEditProject] = useState(isEdit);
   const [isCreateUser, setIsCreateUser] = useState(false);
   const [isViewDetailsUser, setIsViewDetailsUser] = useState(false);
-  console.log(data);
 
   const onGoBackTableUsers = () => {
     setIsCreateUser(false);

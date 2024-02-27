@@ -21,6 +21,7 @@ export const CreateProjectView = () => {
   const { push } = useRouter();
   const [messageApi, contextHolder] = message.useMessage();
   const onCreateProject = async (data: ICreatePayload) => {
+    if (!data.logo) return;
     try {
       const response = await addProject(data);
       if (response.status === CREATED) {
