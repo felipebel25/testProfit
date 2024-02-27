@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Cascader } from "antd";
+
 import { getAllCountries } from "@/services/countries/countries";
 import { getAllCurrencies } from "@/services/currencies/currencies";
 
@@ -11,20 +12,6 @@ interface Option {
   children?: Option[];
 }
 
-const options: Option[] = [
-  {
-    value: "Pais",
-    label: "Pais",
-    isLeaf: false,
-    disableCheckbox: true
-  },
-  {
-    value: "Currencia",
-    label: "Currencia",
-    isLeaf: false,
-    disableCheckbox: true
-  }
-];
 interface Props {
   setSelecetedProjects: Dispatch<SetStateAction<{ country: string[]; currency: string[] }>>;
 }
@@ -100,3 +87,17 @@ export const FilterProjects = ({ setSelecetedProjects }: Props) => {
     />
   );
 };
+const options: Option[] = [
+  {
+    value: "Pais",
+    label: "Pais",
+    isLeaf: false,
+    disableCheckbox: true
+  },
+  {
+    value: "Currencia",
+    label: "Currencia",
+    isLeaf: false,
+    disableCheckbox: true
+  }
+];

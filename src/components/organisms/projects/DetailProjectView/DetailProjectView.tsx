@@ -36,9 +36,9 @@ export const DetailsProjectView = ({ isEdit = false, idProjectParam = "" }: Prop
     setIsViewDetailsUser(false);
   };
 
-  const onUpdateProject = async (data: IUpdateFormProject) => {
+  const onUpdateProject = async (finalData: IUpdateFormProject) => {
     try {
-      const response = await updateProject(data, idProjectParam);
+      const response = await updateProject(finalData, idProjectParam, data.UUID);
       if (response.status === SUCCESS) {
         messageApi.open({
           type: "success",
