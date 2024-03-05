@@ -11,7 +11,8 @@ module.exports = {
         vars: "all"
       }
     ],
+    semi: 0,
     "prefer-const": "error",
     "react-hooks/exhaustive-deps": "error"
   }
-};
+}
